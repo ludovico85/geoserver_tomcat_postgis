@@ -89,7 +89,10 @@ INSTALLAZIONE DI POSTGIS
 sudo apt && sudo apt upgrade
 sudo apt install postgresql postgresql-contrib
 sudo apt install postgis
-
+#per loggarsi come utente postgres
+sudo -u postgres psql
+#per logout
+\q
 #di default postgis crea un utente postgres con database associato postgres; per settare una password digitare
 ALTER USER postgres PASSWORD '';
 #abilitare le connessioni in entrata
