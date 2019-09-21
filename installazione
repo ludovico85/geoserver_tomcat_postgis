@@ -78,11 +78,24 @@ sudo systemctl restart tomcat
 
 10 - web interface
 http://server_domain_or_IP:8080
-
+#######################################################################################################################################
+INSTALLAZIONE DI GEOSERVER
+scaricare geoserver e copiare il file geoserver.war nella cartella webapps di tomcat
 ########################################################################################################################################
 INSTALLAZIONE DI POSTGIS
-sudo apt get install postgis
+sudo apt && sudo apt upgrade
+sudo apt install postgresql postgresql-contrib
+sudo apt install postgis
 
+#di default postgis crea un utente postgres con database associato postgres; per settare una password digitare
+ALTER USER postgres PASSWORD '';
+#abilitare le connessioni in entrata
+sudo nano /etc/postgresql/10/main postgresql.conf
+MODIFICARE LISTEN ADDRESSESS -> ELEIMINARE IL # E INSERIRE '*'
+sudo nano /etc/postgresql/10/main pg_hba.conf
+SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI CONNESSIONE DIGITARE
+host all all 0.0.0.0/0 md5
+sudo service postgresql restart
 
 
 
