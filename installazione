@@ -103,6 +103,49 @@ SOTTO IPV4 INSERIRE L'IP DELLE CONNESSIONI IN ENTRATA. PER PERMTTERE QUALSIASI C
 host all all 0.0.0.0/0 md5
 sudo service postgresql restart
 
+########################################################################################################################################
+Abilitare WFS su leaflet:
+è necessario abilitare jquery
 
+var owsrootUrl = 'http://167.71.61.106:8080/geoserver/realbania/ows';
+var defaultParameters = {
+  service: 'WFS',
+  version: '1.0.0',
+  request: 'GetFeature',
+  typeName: 'realbania:road_kill',
+  maxFeatures: '50',
+  outputFormat: 'application/json',
+};
+		
+var parameters = L.Util.extend(defaultParameters);
+var URL = owsrootUrl + L.Util.getParamString(parameters);
+		
+$.ajax({
+		url: URL,
+		success: function (data) {
+		//create a new geojson layer
+		var geojson = new L.geoJson(data, {
+		// apply a style
+		style: {"color":"#ff7800","weight":10},
+		// and bind a popup showing the data and photo for each feature extracted.
+		}).addTo(map);
+		}
+});
+
+#se si hanno problemi di visualizzazione modificando il seguente file al seguente path
+#var/lib/tomcat7/webapps/geoserver/WEB-INF/web.xml aggiugendo il seguente codice:
+
+<filter>
+  <filter-name>CorsFilter</filter-name>
+  <filter-class>org.apache.catalina.filters.CorsFilter</filter-class>
+  <init-param>
+    <param-name>cors.allowed.origins</param-name>
+    <param-value>*</param-value>
+  </init-param>
+</filter>
+<filter-mapping>
+  <filter-name>CorsFilter</filter-name>
+  <url-pattern>/*</url-pattern>
+</filter-mapping>
 
 
